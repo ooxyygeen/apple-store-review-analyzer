@@ -4,11 +4,11 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from preprocessor import preprocess_for_sentiment, preprocess_for_keywords
-from sentiments import run_sentiment_analysis
-from metrics import calculate_metrics
-from keywords import extract_keywords
-from insights import generate_insights
+from app.services.preprocessor import preprocess_for_sentiment, preprocess_for_keywords
+from app.services.sentiments import run_sentiment_analysis
+from app.services.metrics import calculate_metrics
+from app.services.keywords import extract_keywords
+from app.services.insights import generate_insights
 
 load_dotenv()
 
