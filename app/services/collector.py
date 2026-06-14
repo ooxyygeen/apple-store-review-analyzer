@@ -154,14 +154,14 @@ def collect_reviews(app_id: int, count: int = 100) -> tuple[dict, list[dict]]:
     return metadata, results
 
 
-def save_reviews(app_id: int, metadata: dict, reviews: list[dict]) -> Path:
-    """Save collected reviews and metadata to a JSON file in DATA_DIR."""
+def save_reviews(app_id: int, metadata: dict, reviews: list[dict]) -> tuple[str, Path]:
+    collected_at = datetime.now(timezone.utc).isoformat()
     out = Path(DATA_DIR)
     out.mkdir(parents=True, exist_ok=True)
     path = out / f"reviews_{app_id}.json"
     path.write_text(json.dumps({
-        "collected_at": datetime.now(timezone.utc).isoformat(),
+        "collected_at": collected_at,
         "metadata": metadata,
         "reviews": reviews,
     }, ensure_ascii=False, indent=2), encoding="utf-8")
-    return path
+    return collected_at, path
