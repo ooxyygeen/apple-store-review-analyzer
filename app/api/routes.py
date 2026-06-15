@@ -2,7 +2,8 @@ import os
 from pathlib import Path
 
 from fastapi import APIRouter, HTTPException
-from fastapi.responses import FileResponse, Response
+from fastapi.responses import FileResponse, Response, JSONResponse
+import litellm
 
 from app.services.collector import collect_reviews, save_reviews
 from app.services.analyzer import analyze
@@ -50,6 +51,14 @@ def insights(app_id: int):
         raise HTTPException(status_code=404, detail=str(e))
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
+    except litellm.exceptions.ServiceUnavailableError:
+        return JSONResponse(
+            status_code=503,
+            content={
+                "error": "LLM_PROVIDER_UNAVAILABLE",
+                "message": "The AI analysis service is currently experiencing high demand. Please try again later."
+            }
+        )
     except RuntimeError as e:
         raise HTTPException(status_code=502, detail=str(e))
 
