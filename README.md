@@ -223,4 +223,4 @@ All business logic lives in the `services/` layer, completely independent of Fas
 
 **Metrics visualization:**
 
-![Rating and sentiment distribuitions](assets\claude_metrcis.png)
+![Rating and sentiment distribuitions](assets/claude_metrcis.png)
